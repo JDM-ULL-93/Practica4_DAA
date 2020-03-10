@@ -50,7 +50,7 @@ Solucion* MergeSortS::getInstance(){
 
 void MergeSortS::resolver(){
     if(!compruebaOrdenado()) printf("Ha ocurrido un error, el array no esta ordenado");
-    else for(int i = 0; i < this->_end+1; i++) printf("%d, ",_array[i]);
+    else for(int i = 0; i <= this->_end; i++) printf("%d, ",_array[i]);
 }
 
 bool MergeSortS::compruebaOrdenado(){

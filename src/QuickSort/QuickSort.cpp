@@ -18,8 +18,8 @@ pair<Problema*,Problema*> QuickSortP::descomponer(){
 		}
 	}
     pair<Problema*,Problema*> subProblemas;
-    subProblemas.first = (i <= _end) ? new QuickSortP(_array, i, _end) : new QuickSortP(_array, 0, 0);
-	subProblemas.second = (j >= _begin) ? new QuickSortP(_array, _begin, j) : new QuickSortP(_array, 0, 0);
+    subProblemas.first = new QuickSortP(_array, i, _end);
+	subProblemas.second =new QuickSortP(_array, _begin, j);
     return subProblemas;
 }
 
@@ -45,5 +45,6 @@ void QuickSortS::mezcla(pair<Solucion*,Solucion*> soluciones){
 
 void QuickSortS::resolver(){
     //printf("init = %d , end= %d", _begin, _end);
-    for(int i = _end ; i < _begin ; i++) printf("%d, ",_array[i]);
+    //Cuando el algoritmo termine _end == 0 y _begin == end
+    for(int i = _end ; i < _begin+1 ; i++) printf("%d, ",_array[i]);
 }

@@ -1,0 +1,24 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "[UNIX] mingw32-make.exe Build project",
+            "command": "mingw32-make.exe",
+            "args": [
+                "compile"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "[Windows] nmake.exe Build project",
+            "command": "nmake.exe",
+            "args": [
+                "/F",
+                "MakeFileCL",
+                "build"
+            ],
+            "group": "build"
+        }
+    ],
+    "version": "2.0.0"
+}

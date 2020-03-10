@@ -1,0 +1,119 @@
+#use : nmake /F MakeFileCL all
+# 	+info:https://docs.microsoft.com/en-us/cpp/build/reference/running-nmake?view=vs-2019
+
+#define macros
+EXECUTABLE_NAME = main.exe
+DIR_SRC = .\src
+#DIR_INCLUDE = \
+DIR_BIN = .\bin
+DIR_BIN_X86 = $(DIR_BIN)\x86
+#DIR_SYMBOLS = $(DIR_BIN_X86)\symbols
+DIR_INTERMEDIATE = .\intermediate
+DIR_INTERMEDIATE_X86 = $(DIR_INTERMEDIATE)\x86
+
+SRC_FILES= \
+	$(DIR_SRC)\Framework\Solucion.cpp \
+	$(DIR_SRC)\Framework\Problema.cpp \
+	$(DIR_SRC)\Framework\Framework.cpp \
+	$(DIR_SRC)\Fibonacci\FibonacciS.cpp \
+	$(DIR_SRC)\Fibonacci\FibonacciP.cpp \
+	$(DIR_SRC)\MergeSort\MergeSort.cpp \
+	$(DIR_SRC)\QuickSort\QuickSort.cpp \
+	$(DIR_SRC)\main.cpp
+  
+OBJ_FILES = \
+	$(DIR_INTERMEDIATE_X86)\Solucion.obj \
+	$(DIR_INTERMEDIATE_X86)\Problema.obj \
+	$(DIR_INTERMEDIATE_X86)\Framework.obj \
+	$(DIR_INTERMEDIATE_X86)\FibonacciS.obj \
+	$(DIR_INTERMEDIATE_X86)\FibonacciP.obj \
+	$(DIR_INTERMEDIATE_X86)\MergeSort.obj \
+	$(DIR_INTERMEDIATE_X86)\QuickSort.obj \
+	$(DIR_INTERMEDIATE_X86)\main.obj 
+
+
+#Sintaxis de reglas es igual que en UNIX:
+#<nombre_regla> : <dependencias>
+#	<comando_a_ejecutar>
+#+info : http://www.bojankomazec.com/2011/10/how-to-use-nmake-and-makefile.html
+
+#cl options: +info: https://docs.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-alphabetically?view=vs-2019
+# /c <- Solo compila
+# /EHsc <- Exception Handling Model : s <- Solo captura excepciones sincronas(C++), c<- funciones declaradas como "extern" nunca soltaran excepciones
+# /Fe<arg> <- Establece el nombre final del output resultado
+# /std:c++latest; <- Compila en estandar c++ v <La ultima que se halle instalada en la maquina>
+# /W4 <- Establece el nivel de output warning al maximo (tiquismiquis total)
+# /Z<arg> <- /Z Genera simbolos para debugger.<arg> == 7 guarda esta información en el propio .obj , <arg> == i lo guarda en un fichero PDB separado
+
+#compile chunk
+$(DIR_INTERMEDIATE_X86)\main.obj: $(DIR_SRC)\main.cpp
+	cl /c /EHsc /std:c++17 /Z7 /Fe$(DIR_BIN_X86)\main.obj /I. $(DIR_SRC)\main.cpp
+	copy *.obj $(DIR_INTERMEDIATE_X86)
+	del *.obj
+#	move *.pdb $(DIR_SYMBOLS)\main.pdb
+
+$(DIR_INTERMEDIATE_X86)\Solucion.obj: $(DIR_SRC)\Framework\Solucion.cpp
+	cl /c /EHsc /std:c++17 /Z7 /Fe$(DIR_BIN_X86)\Solucion.obj /I. $(DIR_SRC)\Framework\Solucion.cpp
+	copy *.obj $(DIR_INTERMEDIATE_X86)
+	del *.obj
+#	move *.pdb $(DIR_SYMBOLS)\Solucion.pdb
+	
+$(DIR_INTERMEDIATE_X86)\Problema.obj: $(DIR_SRC)\Framework\Problema.cpp
+	cl /c /EHsc /std:c++17 /Z7 /Fe$(DIR_BIN_X86)\Problema.obj /I. $(DIR_SRC)\Framework\Problema.cpp
+	copy *.obj $(DIR_INTERMEDIATE_X86)
+	del *.obj
+#	move *.pdb $(DIR_SYMBOLS)\Problema.pdb
+	
+$(DIR_INTERMEDIATE_X86)\Framework.obj: $(DIR_SRC)\Framework\Framework.cpp
+	cl /c /EHsc /std:c++17 /Z7 /Fe$(DIR_BIN_X86)\Framework.obj /I. $(DIR_SRC)\Framework\Framework.cpp
+	copy *.obj $(DIR_INTERMEDIATE_X86)
+	del *.obj
+#	move *.pdb $(DIR_SYMBOLS)\Framework.pdb
+	
+$(DIR_INTERMEDIATE_X86)\FibonacciS.obj: $(DIR_SRC)\Fibonacci\FibonacciS.cpp
+	cl /c /EHsc /std:c++17 /Z7 /Fe$(DIR_BIN_X86)\FibonacciS.obj /I. $(DIR_SRC)\Fibonacci\FibonacciS.cpp
+	copy *.obj $(DIR_INTERMEDIATE_X86)
+	del *.obj
+#	move *.pdb $(DIR_SYMBOLS)\FibonacciS.pdb
+
+$(DIR_INTERMEDIATE_X86)\FibonacciP.obj: $(DIR_SRC)\Fibonacci\FibonacciP.cpp
+	cl /c /EHsc /std:c++17 /Z7 /Fe$(DIR_BIN_X86)\FibonacciP.obj /I. $(DIR_SRC)\Fibonacci\FibonacciP.cpp
+	copy *.obj $(DIR_INTERMEDIATE_X86)
+	del *.obj
+#	move *.pdb $(DIR_SYMBOLS)\FibonacciP.pdb
+
+$(DIR_INTERMEDIATE_X86)\MergeSort.obj: $(DIR_SRC)\MergeSort\MergeSort.cpp
+	cl /c /EHsc /std:c++17 /Z7 /Fe$(DIR_BIN_X86)\MergeSort.obj /I. $(DIR_SRC)\MergeSort\MergeSort.cpp
+	copy *.obj $(DIR_INTERMEDIATE_X86)
+	del *.obj
+#	move *.pdb $(DIR_SYMBOLS)\MergeSort.pdb
+
+$(DIR_INTERMEDIATE_X86)\QuickSort.obj: $(DIR_SRC)\QuickSort\QuickSort.cpp
+	cl /c /EHsc /std:c++17 /Z7 /Fe$(DIR_BIN_X86)\QuickSort.obj /I. $(DIR_SRC)\QuickSort\QuickSort.cpp
+	copy *.obj $(DIR_INTERMEDIATE_X86)
+	del *.obj
+#	move *.pdb $(DIR_SYMBOLS)\QuickSort.pdb 
+  
+ 
+# link . + info : https://docs.microsoft.com/en-us/cpp/build/reference/linker-options?view=vs-2019
+#/debug
+$(EXECUTABLE_NAME) : $(OBJ_FILES)
+	link  /debug /out:$(DIR_BIN_X86)\$(EXECUTABLE_NAME) $(OBJ_FILES) 
+  
+# delete output directories
+clean:
+	@echo "Limpiando workspace..."
+	@if exist $(DIR_BIN) rmdir /S /Q $(DIR_BIN)
+	@if exist $(DIR_INTERMEDIATE) rmdir /S /Q $(DIR_INTERMEDIATE)
+ 
+# create output directories
+create_dirs:
+	@echo "Creando directorios..."
+	@if not exist $(DIR_BIN_X86) mkdir $(DIR_BIN_X86)
+	@if not exist $(DIR_INTERMEDIATE_X86) mkdir $(DIR_INTERMEDIATE_X86)
+	
+# build application
+build: $(EXECUTABLE_NAME)
+
+# create directories and build application
+all: clean create_dirs build

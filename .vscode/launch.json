@@ -1,0 +1,43 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "WinDBG.exe - Compilar y depurar proyecto",
+            "type": "windbg",
+            "request": "launch",
+            "verbosity": "debug",
+            "windbgpath": "C:\\Program Files\\Windows Kits\\10\\Debuggers\\x86\\dbgeng.dll",
+            "target": "${workspaceRoot}\\bin\\x86\\main.exe",
+            "workingDir": "${workspaceRoot}",
+            "sources": [
+                "${workspaceRoot}"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "[Windows] nmake.exe Build project"
+        },
+        {
+            "name": "GDB.exe - Compilar y depurar proyecto",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/main.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                  "description": "Enable pretty-printing for gdb",
+                  "text": "-enable-pretty-printing",
+                  "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "[UNIX] mingw32-make.exe Build project"
+        }
+    ]
+}

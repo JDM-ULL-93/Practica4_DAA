@@ -46,5 +46,13 @@ void QuickSortS::mezcla(pair<Solucion*,Solucion*> soluciones){
 void QuickSortS::resolver(){
     //printf("init = %d , end= %d", _begin, _end);
     //Cuando el algoritmo termine _end == 0 y _begin == end
-    for(int i = _end ; i < _begin+1 ; i++) printf("%d, ",_array[i]);
+    if(!compruebaOrdenado()) printf("Ha ocurrido un error, el array no esta ordenado");
+    else for(int i = _end ; i <= _begin ; i++) printf("%d, ",_array[i]);
+}
+
+bool QuickSortS::compruebaOrdenado(){
+    if(_begin < 1) return true;
+    for(int i = 0, j = 1; j <= _begin; i++,j++)
+        if(_array[i] > _array[j]) return false;
+    return true;
 }

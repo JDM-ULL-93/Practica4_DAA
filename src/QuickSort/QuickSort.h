@@ -40,6 +40,8 @@ private:
     uint32_t _begin;
     uint32_t _end;
     int* _array;
+
+    bool compruebaOrdenado();
 };
 
 #endif /*QUICKSORT_H*/
